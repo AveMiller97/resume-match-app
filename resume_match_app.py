@@ -3,24 +3,24 @@ import string
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Ensure necessary NLTK resources are downloaded
-def download_nltk_resources():
+# Automatically download the punkt tokenizer and stopwords if not already available
+def ensure_nltk_resources():
     try:
-        # Check if 'punkt' and 'stopwords' are available
         nltk.data.find('tokenizers/punkt')
     except LookupError:
-        print("Downloading punkt tokenizer...")
-        nltk.download('punkt')  # For tokenization
+        print("Downloading the punkt tokenizer...")
+        nltk.download('punkt')
 
     try:
         nltk.data.find('corpora/stopwords')
     except LookupError:
         print("Downloading stopwords...")
-        nltk.download('stopwords')  # For stopword removal
+        nltk.download('stopwords')
 
-# Download resources (if not already done)
-download_nltk_resources()
+# Run the function to ensure resources are available
+ensure_nltk_resources()
 
+# Import NLTK components
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
@@ -51,9 +51,10 @@ def compare_texts(resume_text, job_description_text):
     return match_score
 
 # Example usage
-resume = """Insert resume text here"""
-job_description = """Insert job description text here"""
+if __name__ == "__main__":
+    resume = """Insert resume text here"""
+    job_description = """Insert job description text here"""
 
-# Calculate and print match score
-score = compare_texts(resume, job_description)
-print(f"Match Score: {score}%")
+    # Calculate and print match score
+    score = compare_texts(resume, job_description)
+    print(f"Match Score: {score}%")
